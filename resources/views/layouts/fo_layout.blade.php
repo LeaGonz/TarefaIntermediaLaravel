@@ -36,7 +36,7 @@
                         <a class="nav-link" href="{{ route('tarefas.allTarefas2') }}">Todas as Tarefas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('NOMBREPRENDARUTA') }}">Prendas</a>
+                        <a class="nav-link" href="{{ route('prendas.home') }}">Prendas</a>
                     </li>
                 </ul>
                 <form class="d-flex" role="search">

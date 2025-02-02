@@ -10,6 +10,7 @@
     <li><a href="{{ route('users.add') }}">Adicionar Utilizador</a></li>
     <li><a href="{{ route('tarefas.allTarefas') }}">Tarefas</a></li>
     <li><a href="{{ route('tarefas.allTarefas2') }}">Todas as Tarefas</a></li> 
+    <li><a href="{{ route('prendas.home') }}">Prendas</a></li> 
 </ul>
 @endsection
 @section('content2')
