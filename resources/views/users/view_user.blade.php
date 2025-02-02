@@ -2,9 +2,9 @@
 
 @section('content')
 
-<h4>Dados do User</h4>
-<h6>Nome: {{$user->name}}</h6>
-<h6>Morada: {{$user->address}}</h6>
-<h6>Nif: {{$user->nif}}</h6>
+<h2>Dados do User</h2>
+<h6><strong>Nome:</strong> {{$user->name}}</h6>
+<h6><strong>Morada:</strong> {{$user->address}}</h6>
+<h6><strong>Nif:</strong> {{$user->nif}}</h6>
 
 @endsection

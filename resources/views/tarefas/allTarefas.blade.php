@@ -21,7 +21,10 @@
         @endforeach
     </ul>
 </div>
+
+
 <div class="col-6">
+    <h1 mb-2>Adicionar Tarefa</h1>
     <form method="POST" action="{{ route('tasks.adicionar') }}">
         @csrf
         <div class="mb-3">
@@ -56,7 +59,7 @@
               </div>
               @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-success">Adicionar</button>
     </form>
 </div>
 </div>

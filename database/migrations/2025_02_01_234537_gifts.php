@@ -11,7 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('gifts', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->integer('valorPrevisto');
+            $table->integer('valorGasto');
+            $table->integer('idUser');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('gifts');
     }
 };

@@ -1,6 +1,7 @@
 html,
 body {
-    background-color: rgb(206, 235, 206);
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
     height: 100%;
     margin: 0;
     display: flex;
@@ -11,11 +12,46 @@ body {
     flex-grow: 1;
 }
 
-footer {
-    text-align: center;
-    padding: 10px;
+.navbar {
+    margin-bottom: 20px;
+    /* Separación entre la barra de navegación y el contenido */
 }
+
+.navbar-nav .nav-link {
+    font-size: 1.1rem;
+}
+
+.navbar-nav .nav-link:hover {
+    text-decoration: underline;
+    /* Subraya los enlaces cuando se pasa el ratón por encima */
+}
+
+.navbar-toggler-icon {
+    background-color: #fff;
+    /* Mejora la visibilidad del ícono en dispositivos móviles */
+}
+
 img {
     width: 100px;
     height: 100px;
+}
+
+footer {
+    color: white;
+    text-align: center;
+    padding: 10px;
+    background-color: #343a40;
+}
+
+/* Home Blade  */
+
+.btn-link {
+    color: #22a90d;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn-link:hover {
+    color: #22a90d;
+    text-decoration: underline;
 }

@@ -9,6 +9,12 @@ use Illuminate\Console\View\Components\Task;
 
 class TarefasController extends Controller
 {
+
+    /**
+     * Passo 1: função que devolve a view principal com a tabela de tarefas
+     * e envia as variáveis com a informação das tarefas, tarefas disponíveis e users
+     * @return \Illuminate\Contracts\View\View
+     */
     public function showTarefas()
     {
 
@@ -35,7 +41,6 @@ class TarefasController extends Controller
             'description' => 'required|string|min:5',
             'user_id'=> 'required|string'
         ]);
-        //dd($request->all()); valor gaasto valor previsto nome y user
         DB::table('tasks')->insert([
             'name' => $request->name,
             'description' => $request->description,
