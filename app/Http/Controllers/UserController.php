@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
-     * Passo 1: função que devolve a view principal com a tabela de users
+     * Função que devolve a view principal com a tabela de users
      * @return \Illuminate\Contracts\View\View
      */
     public function userAll()
@@ -21,14 +21,43 @@ class UserController extends Controller
 
         // $this->insertUserIntoDB();
         // $this->updateUserIntoDB();
-        $allUsers = $this->getAllUsersFromDB();
         // dd($allUsers);
+
+        // sem ternario
+        // $search = null;
+        // if (request()->query("search")) {
+        //     $search = request()->query("search");
+        // } else {
+        //     $search = null;
+        // }
+
+        // con ternario
+        $search = request()->query("search") ? request()->query("search") : null;
+        $allUsers = $this->getAllUsersFromDB($search);
 
         return view('users.all_users', compact('cesaeInfo', 'contacts', 'allUsers'));
     }
 
     /**
-     * Passo 2: função que devolve a view para adicionar um utilizador
+     * Metodo para produca de users por input search
+     * @param mixed $search
+     * @return \Illuminate\Support\Collection<int, \stdClass>
+     */
+    protected function getAllUsersFromDB($search)
+    {
+        $users = DB::table('users');
+        if ($search) {
+            $users = $users
+                ->where('name', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%");
+        }
+        $users = $users->select('*')
+            ->get();
+        return $users;
+    }
+
+    /**
+     * Função que devolve a view para adicionar um utilizador
      * @return \Illuminate\Contracts\View\View
      */
     public function userAdd()
@@ -37,34 +66,33 @@ class UserController extends Controller
     }
 
     /**
-     * Passo 3: função que faz validação e cria um user na base de dados
-     * retorna a função userAll com uma mensagem de sucesso
-     * @param Request $request
+     * Metodo para adicionar ou atualizar um user
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function createUser(Request $request)
     {
-        if(isset( $request->id)){
+        if (isset($request->id)) {
             $request->validate([
                 'name' => 'required|string|min:3',
-                'address' =>'max:100',
-                'nif' =>'max:15'
+                'address' => 'max:100',
+                'nif' => 'max:15'
             ]);
 
-            User::where('id',  $request->id)
-            ->update([
-                'name' => $request->name,
+            User::where('id', $request->id)
+                ->update([
+                    'name' => $request->name,
                     'nif' => $request->nif,
                     'address' => $request->address
-            ]);
+                ]);
 
             return redirect()->route('users.show')->with('message', 'User actualizado com sucesso');
-        }else{
+        } else {
 
             $request->validate([
                 'name' => 'required|string|min:3',
-                'email' =>'required|email|unique:users',
-                'password' =>'required|min:8'
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:8'
             ]);
 
             User::insert(
@@ -73,25 +101,18 @@ class UserController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
 
-            ]);
+                ]
+            );
 
             return redirect()->route('users.show')->with('message', 'User adicionado com sucesso');
         }
     }
 
-
-
-    public function insertUserIntoDB()
-    {
-        DB::table('users')->insert([
-            'name' => 'Shiago',
-            'email' => 'shiago@luis.com',
-            'password' => '1234luis'
-        ]);
-
-        return response()->json('utilizador inserido com sucesso');
-    }
-
+    /**
+     * Summary of viewUser
+     * @param mixed $id
+     * @return \Illuminate\Contracts\View\View
+     */
     public function viewUser($id)
     {
         $user = DB::table('users')
@@ -100,6 +121,11 @@ class UserController extends Controller
         return view('users.view_user', compact('user'));
     }
 
+    /**
+     * Metodo para apagar um user
+     * @param mixed $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteUser($id)
     {
         DB::table('tasks')
@@ -111,22 +137,18 @@ class UserController extends Controller
         return back();
     }
 
-    public function updateUserIntoDB()
-    {
-        DB::table('users')
-            ->where('id', 1)
-            ->update([
-                'updated_at' => now()
-            ]);
-    }
 
-    protected function getAllUsersFromDB()
+    // **************************** codigo para trabalhar com arrays ****************************
+    public function insertUserIntoDB()
     {
-        $users = DB::table('users')
-            ->get();
-        return $users;
-    }
+        DB::table('users')->insert([
+            'name' => 'Shiago',
+            'email' => 'shiago@luis.com',
+            'password' => '1234luis'
+        ]);
 
+        return response()->json('utilizador inserido com sucesso');
+    }
     private function getCesaeInfo()
     {
         $cesaeInfo = [

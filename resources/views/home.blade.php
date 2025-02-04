@@ -4,7 +4,11 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-8">
-                <h5 class="mb-3">Olá, estou em casa!</h5>
+                @auth
+                    @if (isset(Auth::user()->name))
+                        <h5 class="mb-3">Olá {{ Auth::user()->name }}</h5>
+                    @endif
+                @endauth
                 <h6>{{ $myVar }}</h6>
                 <h6>{{ $contactInfo['nome'] }}</h6>
 

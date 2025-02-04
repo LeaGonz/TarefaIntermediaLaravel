@@ -41,9 +41,44 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('prendas.add') }}">Adicionar Prendas</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('backoffice') }}">Backoffice</a>
+                    </li>
                 </ul>
             </div>
         </div>
+        @if (Route::has('login'))
+            <nav class="-mx-3 flex flex-1 justify-end">
+                @auth
+                    <div class="row me-2 align-items-center">
+                        <div class="col-6">
+                            <a href="{{ url('/dashboard') }}"
+                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                                Dashboard
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger m-3">Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                @else
+                    <a href="{{ route('login') }}"
+                        class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                        Log in
+                    </a>
+
+                    @if (Route::has('users.add'))
+                        <a href="{{ route('users.add') }}"
+                            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                            Register
+                        </a>
+                    @endif
+                @endauth
+            </nav>
+        @endif
     </nav>
     <div class="container">
         @yield('content2')

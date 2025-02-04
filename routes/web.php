@@ -1,11 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\TarefasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PrendasController;
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TarefasController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,6 +19,7 @@ Route::get('/hello/{name}', function ($name) {
     return '<h1>Hello</h1>' . $name;
 });
 
+Route::get('/backoffice', [DashboardController::class, 'backoffice'])->name('backoffice')->middleware('auth');
 
 //****************************************** USERS ************************************ */
 Route::get('/users', [UserController::class, 'userAll'])->name('users.show');
@@ -44,12 +46,7 @@ Route::get('/prendas/delete{id}', [PrendasController::class, 'prendasDelete'])->
 Route::get('/prendas/update/{id}/{action}', [PrendasController::class, 'prendasShow'])->name('prendas.update');
 Route::post('/prendas-form/update', [PrendasController::class, 'prendasUpdateFunction'])->name('prendas.updateFunction');
 
-
-
-
-
-
-
+//****************************************** Fallback ************************************ */
 Route::fallback(function () {
     return view('fallback');
 });

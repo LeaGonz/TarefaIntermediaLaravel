@@ -29,7 +29,14 @@
             </div>
         @endif
 
-        <div class="row">
+        <div class="row mt-4">
+
+            <form action="">
+                <input type="text" name="search" id="" value="{{ request()->query('search') }}"
+                    autocomplete="off">
+                <button type="submit" class="btn btn-success">Procurar</button>
+            </form>
+
             <table class="table text-center table-secondary border border-dark mt-4">
                 <thead>
                     <tr>
@@ -52,9 +59,14 @@
                             <td>{{ $user->address }}</td>
                             <td>{{ $user->password }}</td>
                             <td>{{ $user->updated_at }}</td>
-                            <td><a class="btn btn-info" href="{{ route('users.view_user', $user->id) }}">Ver</a></td>
-                            <td><a class="btn btn-danger" href="{{ route('users.delete_user', $user->id) }}">Delete</a>
+                            <td><a class="btn btn-info" href="{{ route('users.view_user', $user->id) }}">Ver/Editar</a>
                             </td>
+                            @auth
+                                @if (Auth::user()->email == 'luis@luis.com')
+                                    <td><a class="btn btn-danger" href="{{ route('users.delete_user', $user->id) }}">Delete</a>
+                                    </td>
+                                @endif
+                            @endauth
                         </tr>
                     @endforeach
                 </tbody>
